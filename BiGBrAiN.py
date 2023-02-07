@@ -967,11 +967,11 @@ def green_corner_check_bottom_band(Cube, corners_togo):
             elif green_square[2] == 6 and goal_face != green_square[1]:
 
                 for turn in range(movement_helper_bottom_band[goal_face][green_square[1]][0]):
-                    movement_decider_maker(Cube, "Blue", movement_helper_bottom_band[goal_face][green_square][1])
+                    movement_decider_maker(Cube, "Blue", movement_helper_bottom_band[goal_face][green_square[1]])
 
-                movement_decider_maker(Cube, square_to_face(other_side[0]), "counter")
-                movement_decider_maker(Cube, "Blue", "clock")
                 movement_decider_maker(Cube, square_to_face(other_side[0]), "clock")
+                movement_decider_maker(Cube, "Blue", "counter")
+                movement_decider_maker(Cube, square_to_face(other_side[0]), "counter")
                 i = 0
                 corners_togo -= 1
 
@@ -1011,7 +1011,7 @@ def green_corner_check_top_band(Cube, corners_togo):
 
         green_square = []
         other_side = []
-        bottom_square = []
+        top_square = []
 
         pos = green_corners[i]
 
@@ -1022,16 +1022,98 @@ def green_corner_check_top_band(Cube, corners_togo):
 
             if Cube[what_green_maps2[i][0]][what_green_maps2[i][1]] != 'G':
                 other_side.append(Cube[what_green_maps2[i][0]][what_green_maps2[i][1]])
+                other_side.append(what_green_maps2[i][0])
+                other_side.append(what_green_maps2[i][1])
 
                 green_square.append(Cube[what_green_maps2[i][2]][what_green_maps2[i][3]])
                 green_square.append(what_green_maps2[i][2])
                 green_square.append(what_green_maps2[i][3])
             else:
                 other_side.append(Cube[what_green_maps2[i][2]][what_green_maps2[i][3]])
+                other_side.append(what_green_maps2[i][2])
+                other_side.append(what_green_maps2[i][3])
 
                 green_square.append(Cube[what_green_maps2[i][0]][what_green_maps2[i][1]])
                 green_square.append(what_green_maps2[i][0])
                 green_square.append(what_green_maps2[i][1])
+
+            top_square += Cube["Green"][pos]
+
+            if green_square[2] == 0:
+
+                movement_decider_maker(Cube, other_side[1], "clock")
+                blue_counter(Cube)
+                movement_decider_maker(Cube, other_side[1], "counter")
+                green_square[2] = 6
+
+            else:
+
+
+                movement_decider_maker(Cube, other_side[1], "counter")
+                blue_clock(Cube)
+                movement_decider_maker(Cube, other_side[1], "clock")
+                green_square[2] = 8
+
+        #Now green is in bottom band, it is just a bottom band solve...
+
+            goal_face = adj_finder_for_sides[square_to_face(top_square[0])]["opposite"]
+
+            # green in bottom left and incorrect face for placement
+            if green_square[2] == 8 and goal_face != green_square[1]:
+
+                for turn in range(movement_helper_bottom_band[goal_face][green_square[1]][0]):
+                    movement_decider_maker(Cube, "Blue", movement_helper_bottom_band[goal_face][green_square[1]][1])
+
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "counter")
+                movement_decider_maker(Cube, "Blue", "clock")
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "clock")
+                i = 0
+                corners_togo -= 1
+
+                green_corner_check_bottom(Cube, corners_togo)
+
+                # green in bottom left and correct face for placement
+            elif green_square[2] == 8:
+
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "counter")
+                movement_decider_maker(Cube, "Blue", "clock")
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "clock")
+
+                i = 0
+                corners_togo -= 1
+
+                green_corner_check_bottom(Cube, corners_togo)
+            elif green_square[2] == 6 and goal_face != green_square[1]:
+
+                print(green_square[1])
+                print(movement_helper_bottom_band[goal_face][green_square[1]])
+                print("AHHHHHHHHHHHHHHHHHHHHHHHH")
+                for turn in range(movement_helper_bottom_band[goal_face][green_square[1]][0]):
+                    movement_decider_maker(Cube, "Blue", movement_helper_bottom_band[goal_face][green_square[1]][1])
+
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "clock")
+                movement_decider_maker(Cube, "Blue", "counter")
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "counter")
+                i = 0
+                corners_togo -= 1
+
+                green_corner_check_bottom(Cube, corners_togo)
+
+                # green in bottom right and correct face
+            elif green_square[2] == 6:
+
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "clock")
+                movement_decider_maker(Cube, "Blue", "counter")
+                movement_decider_maker(Cube, square_to_face(top_square[0]), "counter")
+
+                i = 0
+                corners_togo -= 1
+
+                green_corner_check_bottom(Cube, corners_togo)
+
+        else:
+
+            i += 1
 
 
 

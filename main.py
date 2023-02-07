@@ -50,15 +50,12 @@ if __name__ == '__main__':
             'Yellow': ['O', 'R', 'R', 'W', 'Y', 'B', 'B', 'Y', 'G']}
 
     #Cube with one green corner missing in pos 8 of red face
-    Cube = {'White': ['W', 'W', 'W', 'R', 'W', 'W', 'O', 'B', 'B'],
-            'Green': ['G', 'G', 'G', 'G', 'G', 'G', 'O', 'G', 'G'],
-            'Orange': ['B', 'O', 'O', 'O', 'O', 'O', 'B', 'O', 'R'],
-            'Blue': ['Y', 'R', 'Y', 'W', 'B', 'Y', 'W', 'O', 'W'],
-            'Red': ['R', 'R', 'R', 'R', 'R', 'W', 'R', 'Y', 'G'],
-            'Yellow': ['Y', 'Y', 'Y', 'O', 'Y', 'Y', 'B', 'B', 'B']}
-
-    blue_clock(Cube)
-    blue_clock(Cube)
+    # Cube = {'White': ['W', 'W', 'W', 'R', 'W', 'W', 'O', 'B', 'B'],
+    #         'Green': ['G', 'G', 'G', 'G', 'G', 'G', 'O', 'G', 'G'],
+    #         'Orange': ['B', 'O', 'O', 'O', 'O', 'O', 'B', 'O', 'R'],
+    #         'Blue': ['Y', 'R', 'Y', 'W', 'B', 'Y', 'W', 'O', 'W'],
+    #         'Red': ['R', 'R', 'R', 'R', 'R', 'W', 'R', 'Y', 'G'],
+    #         'Yellow': ['Y', 'Y', 'Y', 'O', 'Y', 'Y', 'B', 'B', 'B']}
 
 
     #green_cross_check(Cube, True)
@@ -73,7 +70,16 @@ if __name__ == '__main__':
 
     #print(green_corner_check_bottom(Cube, 3))
 
-    green_corner_check_bottom_band(Cube, 1)
+    green_info = green_cross_check(Cube, True)
+    place_green_sides(Cube, green_info )
+    green_corners_togo = green_corner_check_top(Cube)
+    green_corners_togo = green_corner_check_bottom(Cube,green_corners_togo)
+    green_corners_togo = green_corner_check_bottom_band(Cube, green_corners_togo)
+    green_corners_togo = green_corner_check_top_band(Cube, green_corners_togo)
+    green_corner_check_bottom_band(Cube, green_corners_togo)
+
+
+
 
     move_list_decoder(get_move_list())
 
@@ -82,9 +88,7 @@ if __name__ == '__main__':
     #corners on top
     #corners on bottom
     #corners on bottom band
-    #corners on bottom
     #corners on top band
-    #corners on bottom
     #corners on bottom band
 
 
